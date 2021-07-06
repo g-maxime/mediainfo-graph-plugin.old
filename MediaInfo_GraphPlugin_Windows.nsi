@@ -82,6 +82,7 @@ Section "SectionPrincipale" SEC01
   SetOverwrite try
   SetOutPath "$INSTDIR\Plugin\Graph"
   File "Plugin\Graph\Template.html"
+  File "version.txt"
 SectionEnd
 
 Section -Post
@@ -120,6 +121,7 @@ Section Uninstall
   Delete "$INSTDIR\msvcp140_2.dll"
   Delete "$INSTDIR\msvcp140_codecvt_ids.dll"
   Delete "$INSTDIR\Plugin\Graph\Template.html"
+  Delete "$INSTDIR\Plugin\Graph\version.txt"
 
   RMDir "$INSTDIR\Plugin\Graph"
   RMDir "$INSTDIR\Plugin"
