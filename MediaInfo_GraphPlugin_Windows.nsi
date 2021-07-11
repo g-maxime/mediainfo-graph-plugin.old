@@ -1,6 +1,10 @@
 #NSIS: encoding=UTF-8
-; Request application privileges for Windows Vista
-RequestExecutionLevel admin
+
+!ifdef PORTABLE
+  RequestExecutionLevel user
+!else
+  RequestExecutionLevel admin
+!endif
 
 ; Some defines
 !define PRODUCT_NAME "MediaInfo Graph Plugin"
@@ -42,13 +46,21 @@ VIAddVersionKey "ProductVersion"   "${PRODUCT_VERSION4}"
 VIAddVersionKey "FileDescription"  "Graph visualisation support for MediaInfo"
 VIAddVersionKey "FileVersion"      "${PRODUCT_VERSION4}"
 VIAddVersionKey "LegalCopyright"   "${PRODUCT_PUBLISHER}"
+!ifdef PORTABLE
+VIAddVersionKey "OriginalFilename" "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows_Portable.exe"
+!else
 VIAddVersionKey "OriginalFilename" "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows.exe"
+!endif
 BrandingText " "
 
 ; Modern UI end
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+!ifdef PORTABLE
+OutFile "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows_Portable.exe"
+!else
 OutFile "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows.exe"
+!endif
 InstallDir "$PROGRAMFILES64\MediaInfo"
 ShowInstDetails nevershow
 ShowUnInstDetails nevershow
@@ -86,21 +98,25 @@ Section "SectionPrincipale" SEC01
 SectionEnd
 
 Section -Post
-  WriteUninstaller "$INSTDIR\graph_plugin_uninst.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName"     "$(^Name)"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon"     "$INSTDIR\MediaInfo.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher"       "${PRODUCT_PUBLISHER}"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\graph_plugin_uninst.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion"  "${PRODUCT_VERSION}"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout"    "${PRODUCT_WEB_SITE}"
-  ${If} ${AtLeastWin7}
-    WriteRegDWORD ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "EstimatedSize" "0x00000928" ; Create/Write the reg key with the dword value
-  ${EndIf}
+  !ifndef PORTABLE
+    WriteUninstaller "$INSTDIR\graph_plugin_uninst.exe"
+    WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName"     "$(^Name)"
+    WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon"     "$INSTDIR\MediaInfo.exe"
+    WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher"       "${PRODUCT_PUBLISHER}"
+    WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\graph_plugin_uninst.exe"
+    WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion"  "${PRODUCT_VERSION}"
+    WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout"    "${PRODUCT_WEB_SITE}"
+    ${If} ${AtLeastWin7}
+      WriteRegDWORD ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "EstimatedSize" "0x00000928" ; Create/Write the reg key with the dword value
+    ${EndIf}
+  !endif
 SectionEnd
 
 
 Section Uninstall
-  SetRegView 64
+  ${If} ${RunningX64}
+    SetRegView 64
+  ${EndIf}
 
   Delete "$INSTDIR\graph_plugin_uninst.exe"
   Delete "$INSTDIR\config6"
@@ -127,7 +143,6 @@ Section Uninstall
   RMDir "$INSTDIR\Plugin"
   RMDir "$INSTDIR"
 
-  SetRegView 64
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   SetAutoClose true
 SectionEnd
