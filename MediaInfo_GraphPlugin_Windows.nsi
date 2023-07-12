@@ -9,7 +9,7 @@
 ; Some defines
 !define PRODUCT_NAME "MediaInfo Graph Plugin"
 !define PRODUCT_PUBLISHER "MediaArea.net"
-!define PRODUCT_VERSION "23.06"
+!define PRODUCT_VERSION "23.07"
 !define PRODUCT_VERSION4 "${PRODUCT_VERSION}.0.0"
 !define PRODUCT_WEB_SITE "http://MediaArea.net/MediaInfo"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
