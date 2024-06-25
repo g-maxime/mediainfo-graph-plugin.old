@@ -6,6 +6,21 @@
   RequestExecutionLevel admin
 !endif
 
+!ifndef ARCH
+  !define ARCH "i386"
+  !ifdef PORTABLE
+    !define SUFFIX "_Portable"
+  !else
+    !define SUFFIX ""
+  !endif
+!else
+  !ifdef PORTABLE
+    !define SUFFIX "_Portable_${ARCH}"
+  !else
+    !define SUFFIX "_${ARCH}"
+  !endif
+!endif
+
 ; Some defines
 !define PRODUCT_NAME "MediaInfo Graph Plugin"
 !define PRODUCT_PUBLISHER "MediaArea.net"
@@ -46,21 +61,13 @@ VIAddVersionKey "ProductVersion"   "${PRODUCT_VERSION4}"
 VIAddVersionKey "FileDescription"  "Graph visualisation support for MediaInfo"
 VIAddVersionKey "FileVersion"      "${PRODUCT_VERSION4}"
 VIAddVersionKey "LegalCopyright"   "${PRODUCT_PUBLISHER}"
-!ifdef PORTABLE
-VIAddVersionKey "OriginalFilename" "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows_Portable.exe"
-!else
-VIAddVersionKey "OriginalFilename" "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows.exe"
-!endif
+VIAddVersionKey "OriginalFilename" "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows${SUFFIX}.exe"
 BrandingText " "
 
 ; Modern UI end
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-!ifdef PORTABLE
-OutFile "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows_Portable.exe"
-!else
-OutFile "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows.exe"
-!endif
+OutFile "MediaInfo_GraphPlugin_${PRODUCT_VERSION}_Windows${SUFFIX}.exe"
 InstallDir "$PROGRAMFILES64\MediaInfo"
 ShowInstDetails nevershow
 ShowUnInstDetails nevershow
@@ -74,23 +81,23 @@ FunctionEnd
 Section "SectionPrincipale" SEC01
   SetOverwrite on
   SetOutPath "$INSTDIR"
-  File "Win32\config6"
-  File "Win32\cdt.dll"
-  File "Win32\cgraph.dll"
-  File "Win32\pathplan.dll"
-  File "Win32\xdot.dll"
-  File "Win32\expat.dll"
-  File "Win32\gvc.dll"
-  File "Win32\gvplugin_core.dll"
-  File "Win32\gvplugin_gdiplus.dll"
-  File "Win32\gvplugin_dot_layout.dll"
-  File "Win32\gvplugin_neato_layout.dll"
-  File "Win32\vcruntime140.dll"
-  File "Win32\concrt140.dll"
-  File "Win32\msvcp140.dll"
-  File "Win32\msvcp140_1.dll"
-  File "Win32\msvcp140_2.dll"
-  File "Win32\msvcp140_codecvt_ids.dll"
+  File "${ARCH}\config6"
+  File "${ARCH}\cdt.dll"
+  File "${ARCH}\cgraph.dll"
+  File "${ARCH}\pathplan.dll"
+  File "${ARCH}\xdot.dll"
+  File "${ARCH}\expat.dll"
+  File "${ARCH}\gvc.dll"
+  File "${ARCH}\gvplugin_core.dll"
+  File "${ARCH}\gvplugin_gdiplus.dll"
+  File "${ARCH}\gvplugin_dot_layout.dll"
+  File "${ARCH}\gvplugin_neato_layout.dll"
+  File "${ARCH}\vcruntime140.dll"
+  File "${ARCH}\concrt140.dll"
+  File "${ARCH}\msvcp140.dll"
+  File "${ARCH}\msvcp140_1.dll"
+  File "${ARCH}\msvcp140_2.dll"
+  File "${ARCH}\msvcp140_codecvt_ids.dll"
   SetOverwrite try
   SetOutPath "$INSTDIR\Plugin\Graph"
   File "Plugin\Graph\Template.html"
