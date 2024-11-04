@@ -29,15 +29,14 @@ gvplugin_core.dll core {
 		cmapx_np:map 1
 	}
 	device {
-		mp:mp -1
-	}
-	device {
 		ps:ps 1
 		ps2:ps 1
 		eps:ps 1
 	}
 	device {
 		svg:svg 1
+		svgz:svg 1
+		svg_inline:svg 1
 	}
 	device {
 		json:json 1
@@ -47,9 +46,6 @@ gvplugin_core.dll core {
 	}
 	device {
 		tk:tk 1
-	}
-	device {
-		vml:vml 1
 	}
 	device {
 		pic:pic -1
@@ -68,13 +64,11 @@ gvplugin_core.dll core {
 		map 1
 	}
 	render {
-		mp -1
-	}
-	render {
 		ps 1
 	}
 	render {
 		svg 1
+		svg_inline 1
 	}
 	render {
 		json 1
@@ -84,9 +78,6 @@ gvplugin_core.dll core {
 	}
 	render {
 		tk 1
-	}
-	render {
-		vml 1
 	}
 	render {
 		pic -1
@@ -105,11 +96,11 @@ gvplugin_core.dll core {
 		jpeg:fig 1
 		jpe:fig 1
 		jpg:fig 1
-#FAILS		png:vrml 1
-#FAILS		gif:vrml 1
-#FAILS		jpeg:vrml 1
-#FAILS		jpe:vrml 1
-#FAILS		jpg:vrml 1
+		png:vrml 1
+		gif:vrml 1
+		jpeg:vrml 1
+		jpe:vrml 1
+		jpg:vrml 1
 		eps:ps 1
 		ps:ps 1
 		(lib):ps 1
@@ -138,17 +129,76 @@ gvplugin_core.dll core {
 		eps:xdot 1
 		svg:xdot 1
 		svg:svg 1
-		png:vml 1
-		gif:vml 1
-		jpeg:vml 1
-		jpe:vml 1
-		jpg:vml 1
 		gif:tk 1
 	}
 }
 gvplugin_dot_layout.dll dot_layout {
 	layout {
 		dot 0
+	}
+}
+gvplugin_gd.dll gd {
+	render {
+		gd 1
+	}
+	render {
+		vrml 1
+	}
+	textlayout {
+		textlayout 2
+	}
+	loadimage {
+		gd:gd 1
+		gd2:gd 1
+		gif:gd 1
+		jpeg:gd 1
+		jpe:gd 1
+		jpg:gd 1
+		png:gd 1
+		gd:ps 1
+#FAILS		gd:lasi 1
+		gd2:ps 1
+#FAILS		gd2:lasi 1
+		gif:ps 1
+#FAILS		gif:lasi 1
+		jpeg:ps 1
+		jpg:ps 1
+		jpe:ps 1
+#FAILS		jpeg:lasi 1
+#FAILS		jpg:lasi 1
+#FAILS		jpe:lasi 1
+		png:ps 1
+#FAILS		png:lasi 1
+		gd:cairo 1
+		gd2:cairo 1
+		gif:cairo 1
+		jpeg:cairo 1
+		jpg:cairo 1
+		jpe:cairo 1
+		png:cairo -1
+	}
+	device {
+		gif:cairo 10
+		wbmp:cairo 5
+		jpe:cairo 5
+		jpeg:cairo 5
+		jpg:cairo 5
+		png:cairo 5
+		gd:cairo 5
+		gd2:cairo 5
+	}
+	device {
+		gif:gd 1
+		wbmp:gd 1
+		jpe:gd 1
+		jpeg:gd 1
+		jpg:gd 1
+		png:gd 1
+		gd:gd 1
+		gd2:gd 1
+	}
+	device {
+		vrml:vrml 1
 	}
 }
 gvplugin_gdiplus.dll gdiplus {
@@ -180,14 +230,20 @@ gvplugin_gdiplus.dll gdiplus {
 		tiff:gdiplus 8
 	}
 	device {
-#FAILS		bmp:cairo 8
-#FAILS		gif:cairo 8
-#FAILS		jpe:cairo 8
-#FAILS		jpeg:cairo 8
-#FAILS		jpg:cairo 8
-#FAILS		png:cairo 8
-#FAILS		tif:cairo 8
-#FAILS		tiff:cairo 8
+		bmp:cairo 8
+		gif:cairo 8
+		jpe:cairo 8
+		jpeg:cairo 8
+		jpg:cairo 8
+		png:cairo 8
+		tif:cairo 8
+		tiff:cairo 8
+	}
+}
+gvplugin_kitty.dll kitty {
+	device {
+		kitty:cairo 0
+		kittyz:cairo 1
 	}
 }
 gvplugin_neato_layout.dll neato_layout {
@@ -202,5 +258,42 @@ gvplugin_neato_layout.dll neato_layout {
 		nop 0
 		nop1 0
 		nop2 0
+	}
+}
+gvplugin_pango.dll cairo {
+	render {
+		cairo 10
+	}
+	textlayout {
+		textlayout 10
+	}
+	loadimage {
+		png:cairo 1
+#FAILS		png:lasi 2
+		png:ps 2
+	}
+	device {
+		png:cairo 10
+		ps:cairo -10
+		eps:cairo -10
+		pdf:cairo 10
+		svg:cairo -10
+	}
+}
+gvplugin_vt.dll vt {
+	device {
+		vt:cairo 0
+		vt-24bit:cairo 0
+		vt-4up:cairo 0
+		vt-6up:cairo 0
+		vt-8up:cairo 0
+	}
+}
+gvplugin_webp.dll webp {
+	device {
+		webp:cairo 1
+	}
+	loadimage {
+		webp:cairo 1
 	}
 }
